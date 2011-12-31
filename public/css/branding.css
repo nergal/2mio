@@ -1,0 +1,19 @@
+body, html{
+	background:url(/i/branding/prestige_winter.jpg) !important;
+	background-attachment: fixed !important;
+	background-position: 50% 0 !important;
+	background-repeat: no-repeat !important;
+	background-color:#333333 !important;
+}
+
+body {
+	cursor: pointer;		
+}
+.limiter, .header, .container, .rightcol, .footer, .clear {
+	cursor: auto;
+}
+
+.footer, .wrapper{
+	background: none !important;
+}
+

@@ -1,0 +1,26 @@
+#tags ul {
+    text-align: center;
+    margin:1em 0;
+    padding:.5em 10px;
+}
+
+#tags li {
+    display: inline;
+    list-style: none;
+}
+
+#tags ul li a {
+    text-decoration: none;
+    padding:0 2px;
+}
+
+#tags ul li a.size1 { font-size: 0.6em; font-weight: 100; }
+#tags ul li a.size2 { font-size: 0.7em; font-weight: 200; }
+#tags ul li a.size3 { font-size: 0.8em; font-weight: 300; }
+#tags ul li a.size4 { font-size: 0.9em; font-weight: 400; }
+#tags ul li a.size5 { font-size: 1.0em; font-weight: 500; }
+#tags ul li a.size6 { font-size: 1.1em; font-weight: 600; }
+#tags ul li a.size7 { font-size: 1.2em; font-weight: 700; }
+#tags ul li a.size8 { font-size: 1.3em; font-weight: 800; }
+#tags ul li a.size9 { font-size: 1.4em; font-weight: 900; }
+#tags ul li a.size10 { font-size: 1.5em; font-weight: 900; }

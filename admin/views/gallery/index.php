@@ -1,0 +1,2 @@
+TEST GALLERY OK!
+<?php

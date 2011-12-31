@@ -1,0 +1,8 @@
+#sec_title { width: 140px; }
+#sec_url { width: 120px; }
+#sec_order { width: 17px; }
+
+#butsecadd { width: 65px; color:#006633;font-weight:bold; margin-left: 0px; }
+#butsecupd { width: 72px; color:#0000FF;font-weight:bold; margin-left: 1px; }
+#butsecdel { width: 60px; color:red;font-weight:bold; margin-left: 1px; }
+#block_similar { width:100%; border:1px solid; border-color:red; }

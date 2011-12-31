@@ -1,0 +1,196 @@
+/* Стили для опросника */
+
+.ask_content {
+    width:550px;    
+    height:200px;
+}
+
+#ask_subscript {
+    position: absolute;
+    z-index: 9999;
+    text-align: justify;
+}
+
+#ask_subscript, #ask_step2, #ask_step3 {
+    display:none;
+}
+
+.popup
+{
+    position: relative;
+    width: 617px;
+    padding: 12px 18px;
+    font-size: 14px;
+    background: #fff;
+    border: 2px solid #aa304b;
+    -webkit-border-radius: 17px;
+    -moz-border-radius: 17px;
+    border-radius: 17px;
+    -webkit-box-shadow: 0 0 16px #999;
+    -moz-box-shadow: 0 0 16px #999;
+    box-shadow: 0 0 16px #999;
+    behavior: url(/css/PIE.htc);
+}
+
+.popup-close
+{
+    position: absolute;
+    top: 9px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: url("/i/ask/popup-close.png") no-repeat;
+    cursor: pointer;
+}
+
+.popup .line
+{
+    padding: 10px;
+}
+
+.contentwrap-tit
+{
+    color: #aa304b;
+    line-height: 20px;
+    width: 400px;
+}
+
+.gender-tit
+{
+    float: left;
+    margin: 6px 13px 0 0;
+    color: #3f3f3f;
+}
+
+.gender-check-container
+{
+    float: left;
+    width: 540px;
+    padding: 7px 0;
+    background: #ebebeb;
+    border-radius:3px;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    /*behavior: url(/css/PIE.htc);*/ 
+}
+
+.gender-check-container:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.gender-item
+{
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.gender-item__i
+{
+    display: inline-block;
+}
+
+.gender-item input[type='radio']
+{
+    float: left;
+    margin: 2px 5px 0 0;
+}
+
+.gender-item label
+{
+    float: left;
+}
+
+.topics
+{
+    margin: 0 0 18px 26px;
+}
+
+.topics .ch
+{
+    margin: 0 13px 5px 0;
+}
+
+.popup-submit-container
+{
+    text-align: center;
+}
+
+.popup-submit
+{
+    font-size: 10px;
+    height: 20px;
+    padding: 0 40px;
+    line-height: 17px;
+    color: #fff;
+    background: url("/i/ask/popup-submit.png") repeat-x;
+    border-radius: 4px;
+    border: 1px solid #c75965;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    cursor: pointer;
+    /*behavior: url(/css/PIE.htc);*/
+}
+
+.subscribe
+{
+    margin-top: 23px;
+}
+
+.subscribe label
+{
+    margin-right: 5px;
+}
+
+.subscribe input[type='text']
+{
+    height: 24px;
+    width: 505px;
+    border: 1px solid #c6c6c6;
+    line-height: 22px;
+}
+
+.subscribe .popup-submit-container
+{
+    margin-top: 21px;
+}
+
+.completion
+{
+    text-align: center;
+    margin: 50px auto 0 auto;
+}
+
+.completion .popup-submit-container
+{
+    margin-top: 40px;
+}
+
+.askradio
+{
+    float: left;
+    margin: 2px 5px 0 0;
+    display: block;
+    height: 14px;
+    width: 14px;
+    background: url('/i/ask/radio-button.png') no-repeat 0px bottom;
+}
+
+.askradio.active
+{
+    background: url('/i/ask/radio-button-select.png') no-repeat 0px bottom;
+}
+
+.askradio input[type='radio']
+{
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+

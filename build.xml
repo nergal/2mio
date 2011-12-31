@@ -1,0 +1,297 @@
+<?xml version="1.0" ?>
+<project name="2mio" default="help">
+	<tstamp />
+
+	<property file="build.properties" />
+
+	<target name="help">
+		<echo message="Общие задачи" />
+		<echo message="============" />
+		<echo message="phing check             Проверка кода" />
+		<echo message="      cs                phpCodeSniffer" />
+		<echo message="      cpd               Обнаружение копипасты" />
+		<echo message="      pmd               Индикатор необходимости рефакторинга" />
+		<echo message="      lint              Проверка синтаксиса" />
+		<echo message="phing check-log         Проверка кода с логированием результатов" />
+		<echo message="      cs-log            phpCodeSniffer с логгированием" />
+		<echo message="      cpd-log           Обнаружение копипасты с логгированием" />
+		<echo message="      pmd-log           Project Mess Detector с логгированием" />
+		<echo message="      lint-log          Проверка синтаксиса с логгированием" />
+		<echo message="" />
+		<echo message="Задачи проекта" />
+		<echo message="==============" />
+		<echo message="phing start             Создаёт окружение разработки под задачу" />
+		<echo message="phing finish            Завершение задачи и перенос в dev" />
+		<echo message="phing check             Стягивание обновлений с dev-репозитария" />
+		<echo message="* phing migrate         Выгрузка изменений БД на удалённую машину" />
+		<echo message="phing docs              Создание документации по проекту" />
+		<echo message="phing build-selenium    Генерация тестов к Selenium IDE" />
+		<echo message=""/>
+		<echo message="Остальные задачи" />
+		<echo message="================" />
+		<echo message="phing ci                Задачи для сервера бесконечной интеграции" />
+		<echo message="phing pack              Создаёт релиз в .zip" />
+		<echo message="* phing upload          Загрузка снапшота на сервер" />
+		<echo message="* phing clean           Очистка мусора от сборки" />
+		<echo message=""/>
+		<echo message="____________"/>
+		<echo message="Цели сборки, помеченные (*) готовы не до конца и ими лучше не пользоваться."/>
+	</target>
+
+	<target
+		name="all"
+		depends="check, docs, pack, migrate, upload"
+		description="Make everything that we need to deploy project">
+		<version releasetype="Major" file="version.txt" property="version.number" />
+	</target>
+
+	<fileset dir="${build.dir}" id="project">
+		<exclude name="**/tests/**" />
+		<exclude name="**/vendor/**" />
+		
+		<exclude name="application/cache/**" />
+		
+		<include name="application/**/*.php" />
+		<include name="modules/asset/**/*.php" />
+		<include name="modules/bbcode/**/*.php" />
+		<include name="modules/blocks/**/*.php" />
+		<include name="modules/event/**/*.php" />
+		<include name="modules/meta/**/*.php" />
+		<include name="modules/resizer/**/*.php" />
+		<include name="modules/beanstalk/classes/kohana/**/*.php" />
+		<include name="public/*.php" />
+	</fileset>
+
+		
+	<target name="clean">
+		<delete dir="${build.out}" />
+		<mkdir dir="${build.out}/logs" />
+	</target>
+	
+	
+<!-- Git-->
+	<target name="start">
+		<propertyprompt propertyName="git-feature-branch" defaultValue="${default.feature}" promptText="Feature name:" />		
+		<phingcall target="pull" />
+		<gitcheckout branchname="${git-feature-branch}" create="true" repository="${build.repo}" />		
+	</target>
+	
+	<target name="finish" depends="cs">
+		<propertyprompt propertyName="git-feature-branch" defaultValue="${default.feature}" promptText="Feature name:" />
+
+		<exec command="git add ." dir="${build.repo}" passthru="true"/>
+		<exec command="git commit -am 'Commit in ${DSTAMP}.${TSTAMP}'" dir="${build.repo}" passthru="true" />
+
+		<phingcall target="pull" />
+		
+		<exec command="git merge --no-ff ${git-feature-branch}" dir="${build.repo}" passthru="true" />		
+		
+		<gitpush repository="${build.repo}" />
+		<version releasetype="Bugfix" file="version.txt" property="version.number"/>
+	</target>
+	
+	<target name="pull">
+		<gitcheckout branchname="master" repository="${build.repo}" />
+		<gitpull all="true" repository="${build.repo}" />
+	</target>
+<!-- /Git -->
+
+<!-- Деплой -->
+	<target name="migrate" description="Database Migrations">  
+		<taskdef name="dbdeploy" classname="phing.tasks.ext.dbdeploy.DbDeployTask" />
+
+		<property name="build.dbdeploy.deployfile" value="${db.path}/deploy/scripts/deploy-${DSTAMP}${TSTAMP}.sql" />
+		<property name="build.dbdeploy.undofile" value="${db.path}/deploy/scripts/undo-${DSTAMP}${TSTAMP}.sql" />
+
+		<dbdeploy
+			url="mysql:host=${db.host};dbname=${db.name}"
+			userid="${db.user}"
+			password="${db.pass}"
+			dir="${db.path}/db/deltas"
+			outputfile="${build.dbdeploy.deployfile}"
+			undooutputfile="${build.dbdeploy.undofile}" />
+			
+		<exec 
+			command="${progs.mysql} -h${db.host} -u${db.user} -p${db.pass} ${db.name} &lt; ${build.dbdeploy.deployfile}"
+			dir="${db.path}"
+			checkreturn="true" />
+	</target>
+
+	<target name="prepare" description="Prepare application to upload">
+		<echo msg="Creating new dir" />
+		<mkdir dir="${build.out}/archive" />	
+		<chown file="application/cache" user="nginx" verbose="true" failonerror="false" />
+	</target>
+
+	<target name="prepare-ci" description="Prepare application to CI build">
+		<mkdir dir="${build.out}/api" />	
+
+		<mkdir dir="${build.dir}/application/cache" />	
+		<chown file="${build.dir}/application/cache" user="jenkins" verbose="true" failonerror="false" />
+	</target>
+
+	<target name="pack" depends="prepare" description="Pack files">	
+		<echo msg="Pack files" />
+		<tar destfile="${build.out}/archive/backup${DSTAMP}.${TSTAMP}.zip">
+			<fileset dir="${build.dir}">
+				<exclude name="other/" />
+				<exclude name="etc/" />
+			</fileset>
+		</tar>
+	</target>
+	
+	<target name="upload" description="Upload to main server">
+		<version releasetype="Minor" file="version.txt" property="version.number"/>
+	</target>
+<!-- /Деплой -->
+
+<!-- Разворачивание локальной копии -->
+	<target 
+		name="copy"
+		description="Upload project files in public_html directory">
+		<copy 
+			todir="${build.deploy}"
+			overwrite="true">
+			<fileset dir="src">
+					<exclude name="etc/" />
+					<exclude name="bin/" />
+			</fileset>
+		</copy>
+	</target>
+<!-- /Разворачивание локальной копии -->
+
+<!-- Проверки -->
+	<target name="check" depends="cs, cpd, pmd, lint" />
+	<target name="check-log" depends="cs-log, cpd-log, pmd-log, lint-log, jdepend-log" />
+	
+	<target name="prepare-logs" description="Prepare log directories">
+		<mkdir dir="${build.out}/logs" />
+		<mkdir dir="${build.dir}/etc/logs/application" />
+	</target>
+
+	<target name="cs" description="phpCodeSniffer tests">
+		<phpcodesniffer
+			standard="Kohana"
+			showWarnings="true">
+				<fileset refid="project" />
+				<formatter type="default" usefile="false" />
+		</phpcodesniffer>
+	</target>
+	
+	<target name="cs-log" description="phpCodeSniffer tests with logging" depends="prepare-logs">
+		<phpcodesniffer
+			standard="Kohana"
+			showWarnings="true">
+				<fileset refid="project" />
+				<formatter type="default" usefile="false"/>
+				<formatter type="checkstyle" outfile="${build.out}/logs/checkstyle.xml"/>
+		</phpcodesniffer>
+	</target>
+	
+	<target name="cpd" description="Copy/Paste Detector">
+		<phpcpd>
+			<fileset refid="project" />
+			<formatter type="default" usefile="false" />
+		</phpcpd>
+	</target>
+	
+	<target name="cpd-log" description="Copy/Paste Detector with logging" depends="prepare-logs">
+		<phpcpd>
+			<fileset refid="project" />
+			<formatter type="pmd" outfile="${build.out}/logs/pmd-cpd.xml"/>
+		</phpcpd>
+	</target>
+	
+	<target name="pmd" description="Project Mess Detector">
+		<phpmd rulesets="codesize,unusedcode,naming,design">
+			<fileset refid="project" />
+		</phpmd>
+	</target>
+	
+	<target name="pmd-log" description="Project Mess Detector with logging" depends="prepare-logs">
+		<phpmd rulesets="codesize,unusedcode,naming,design">
+			<fileset refid="project" />
+			<formatter type="xml" outfile="${build.out}/logs/pmd.xml"/>
+		</phpmd>
+	</target>
+	
+	<target name="lint" description="lint syntax code chech">
+		<phplint haltonfailure="true" deprecatedAsError="true">
+			<fileset refid="project" />
+		</phplint>
+	</target>
+
+	<target name="lint-log" description="lint syntax code chech with logging" depends="prepare-logs">
+		<phplint haltonfailure="true" deprecatedAsError="true" tofile="${build.out}/logs/lint.log">
+			<fileset refid="project" />
+		</phplint>
+	</target>
+
+	<target name="jdepend-log" description="jDepend" depends="prepare-logs">
+		<phpdepend>
+			<fileset refid="project" />
+			<logger type="jdepend-xml" outfile="${build.out}/logs/jdepend.xml" />
+		</phpdepend>
+	</target>    
+	
+	<target name="phploc" description="Generate phploc.csv">
+	        <mkdir dir="${build.out}/logs" />
+        	<exec command="phploc --log-csv ${build.out}/logs/phploc.csv ${build.dir}" />
+        </target>
+<!-- /Проверки -->
+
+<!-- Тесты -->
+	<target name="test">
+		<exec command="phpunit --bootstrap=modules/unittest/bootstrap.php modules/unittest/tests.php" checkreturn="true" passthru="true"/>
+	</target>
+		    
+	<target name="test-log">
+		<exec command="phpunit --bootstrap=modules/unittest/bootstrap.php --coverage-html=${build.out}/coverage --log-junit=${build.out}/logs/junit.xml --coverage-clover=${build.out}/logs/clover.xml modules/unittest/tests.php" checkreturn="true" passthru="true"/>
+	</target>
+
+	<target name="build-selenium">
+	    <mkdir dir="${build.out}/selenium" />
+	    <copy todir="${build.out}/selenium" >
+		<fileset dir="etc/selenium">
+	    	    <include name="**/*.html" />
+		</fileset>
+	    </copy>
+	    
+	    
+	    <reflexive>
+		<fileset dir="${build.out}/selenium">
+	    	    <include pattern="**/*.html" />
+	        </fileset>
+	        <filterchain>
+		    <replacetokens begintoken="{{ " endtoken=" }}">
+			<token key="domain" value="${domain}" />
+		    </replacetokens>
+		</filterchain>
+	    </reflexive>
+	</target>
+<!-- /Тесты -->
+
+<!-- Документация -->
+	<target name="docs">
+		<phpdoc title="API Documentation"
+			destdir="${build.out}/api"
+			sourcecode="false"
+			output="HTML:Smarty:PHP">
+			<fileset refid="project" />
+			<projdocfileset dir=".">
+				<include name="version.txt" />
+			</projdocfileset>
+		</phpdoc>
+	</target>
+<!-- /Документация -->
+	
+<!-- Hudson CI target -->
+	<target name="ci" depends="clean,prepare-ci">
+		<phingcall target="check-log" />
+		<phingcall target="test-log" />
+		<!-- <phingcall target="docs" /> -->
+		<!-- <phingcall target="phploc" /> -->
+	</target>
+<!-- /Hudson CI target -->
+</project>
+
