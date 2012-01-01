@@ -36,7 +36,7 @@ class Controller_Resizer extends Controller {
 		$path[] = $filename.'.'.$ext;
 		$path = implode(DIRECTORY_SEPARATOR, $path);
 
-		$config = Kohana::config('resizer');
+		$config = Kohana::$config->load('resizer');
 
 		$allow_resize = FALSE;
 		foreach ($config->get('allowed_sizes') as $size) {

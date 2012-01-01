@@ -222,7 +222,7 @@ class Kohana_Mailer {
 	public function connect( $config = "default" ) 
 	{
 		// Load configuration
-		$config = Kohana::config('mailer.'.$config);
+		$config = Kohana::$config->load('mailer.'.$config);
 
 		$transport = $config['transport'];
 		$config = $config['options'];

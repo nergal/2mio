@@ -42,7 +42,7 @@ abstract class Controller_Demo_OAuth extends Controller_Demo {
 		$this->provider = OAuth_Provider::factory($provider);
 
 		// Load the consumer
-		$this->consumer = OAuth_Consumer::factory(Kohana::config("oauth.{$provider}"));
+		$this->consumer = OAuth_Consumer::factory(Kohana::$config->load("oauth.{$provider}"));
 
 		if ($token = $this->session->get($this->key('access')))
 		{

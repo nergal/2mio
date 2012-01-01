@@ -18,9 +18,9 @@
 		<link rel="image_src" href="<?php echo rtrim(URL::base(TRUE), '/').$this->photo($this->article) ?>" />
     <?php endif; ?>
     <meta property="og:url" content="<?php echo rtrim(URL::base(TRUE), '/').$this->uri($this->article) ?>" />
-    <meta property="fb:app_id" content="<?php echo Kohana::config('oauth.facebook.key') ?>" />
+    <meta property="fb:app_id" content="<?php echo Kohana::$config->load('oauth.facebook.key') ?>" />
     <meta property="og:description" content="<?php echo Helper::filter($this->article->description) ?>"/>
-    <meta property="fb:app_id" content="<?php echo Kohana::config('oauth.facebook.key') ?>"/>
+    <meta property="fb:app_id" content="<?php echo Kohana::$config->load('oauth.facebook.key') ?>"/>
 <?php $this->endblock('meta') ?>
 
 <?php $this->block('content') ?>

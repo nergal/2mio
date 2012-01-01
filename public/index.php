@@ -2,7 +2,7 @@
 
 $application = '../application';
 $modules = '../modules';
-$system = '../system';
+$system = '../core';
 
 define('EXT', '.php');
 
@@ -61,7 +61,7 @@ if (DEBUG) {
 require APPPATH.'bootstrap'.EXT;
 
 $request = Request::factory();
-Event::emit('redirects', $request);
+// Event::emit('redirects', $request);
 $data = $request->execute()
 	->send_headers()
 	->body();

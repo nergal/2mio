@@ -213,7 +213,7 @@ class Kohana_Unittest_Runner implements PHPUnit_Framework_TestListener {
 			throw new Kohana_Exception('Code coverage cannot be collected because the xdebug extension is not loaded');
 		}
 
-		$this->result->collectCodeCoverageInformation( (bool) $collect_cc);
+		//$this->result->collectCodeCoverageInformation( (bool) $collect_cc);
 
 		// Run the tests.
 		$this->suite->run($this->result, FALSE, $groups);

@@ -18,8 +18,8 @@ abstract class SSO_Core_Service_Vkontakte extends SSO_OAuth2 {
 		include Kohana::find_file('vendor', 'vkontakte/api');
 
 		// Set config		
-		$config = Kohana::config('oauth.vkontakte');
-		$sso = Kohana::config('sso.vkontakte');
+		$config = Kohana::$config->load('oauth.vkontakte');
+		$sso = Kohana::$config->load('sso.vkontakte');
 		
 		$callback = URL::site($sso['callback'], Request::current());
 

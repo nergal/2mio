@@ -68,7 +68,7 @@ class Controller_UnitTest extends Controller_Template
 		// to be loaded
 		Unittest_Tests::configure_environment(FALSE);
 
-		$this->config = Kohana::config('unittest');
+		$this->config = Kohana::$config->load('unittest');
 
 		// This just stops some very very long lines
 		$route = Route::get('unittest');

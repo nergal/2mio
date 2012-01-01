@@ -53,7 +53,7 @@ abstract class Kohana_Asset
 	public static function instance()
 	{
 		if (self::$_instance === NULL) {
-			$config = Kohana::config('asset')->as_array();
+			$config = Kohana::$config->load('asset')->as_array();
 			self::$_instance = new Asset($config);
 		}
 

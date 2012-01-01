@@ -52,7 +52,7 @@ if (Kohana::$environment === Kohana::DEVELOPMENT) {
 		'profile'   => TRUE,
 		'errors'    => TRUE,
 		'charset'   => 'utf-8',
-		'modules'   => 'apis/twitter, asset, auth, cache, bbcode, beanstalk, blocks, database, demo, event, image, mailer, meta, oauth, orm, pagination, plater, resizer, userguide, sso',
+		'modules'   => 'apis/twitter, asset, auth, cache, bbcode, beanstalk, blocks, database, demo, event, image, mailer, meta, oauth, orm, pagination, plater, resizer, unittest, sso',
 		'cache_dir' => APPPATH.'cache',
 		'logdir'    => APPPATH.'../etc/logs/application',
 		'salt'      => 'nd79Y!cPDG!SuWV$rWT8uHdJk%*T2ve84%#&9GCwN6c^5Hbj54^P$Ckx!8RH',

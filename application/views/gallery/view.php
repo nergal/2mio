@@ -6,7 +6,7 @@
     <meta property="og:type" content="album" />
     <meta property="og:image" content="<?php echo rtrim(URL::base(TRUE), '/').$this->photo($this->photo, '620x400', 'cropg') ?>" />
     <meta property="og:url" content="<?php echo rtrim(URL::base(TRUE), '/').$this->uri($this->photo) ?>" />
-    <meta property="fb:app_id" content="<?php echo Kohana::config('oauth.facebook.key') ?>" />
+    <meta property="fb:app_id" content="<?php echo Kohana::$config->load('oauth.facebook.key') ?>" />
     <meta name="Description" content="<?php echo Helper::filter($this->photo->section->name) ?>" />
 <?php $this->endblock('meta') ?>
 

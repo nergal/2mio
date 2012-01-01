@@ -349,7 +349,7 @@ abstract class Model_Abstract_Page extends ORM implements Model_Abstract_Interfa
     {
 		$abc_counter = array();
 		
-		foreach (Kohana::config('abc.ru') as $key => $litera) {
+		foreach (Kohana::$config->load('abc.ru') as $key => $litera) {
 			
 			$query = $this
 				->where($this->_table_name.'.showhide', '=', 1)
@@ -379,7 +379,7 @@ abstract class Model_Abstract_Page extends ORM implements Model_Abstract_Interfa
      */
     public function get_tree_by_litera($section, $page = NULL, $limit = 10, $count = FALSE, $litera_num = -1)
     {
-		$abc_array = Kohana::config('abc.ru');
+		$abc_array = Kohana::$config->load('abc.ru');
 		
 		$query = $this->reset();		
 		

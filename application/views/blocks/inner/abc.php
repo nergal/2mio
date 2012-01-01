@@ -1,6 +1,6 @@
 					<div class="abc">
 					    <ul>
-							<?php foreach(Kohana::config('abc.ru') as $key => $litera): ?>
+							<?php foreach(Kohana::$config->load('abc.ru') as $key => $litera): ?>
 								<?php if ($key == $this->litera_num): ?>
 									<li><span class="active"><?php echo $litera; ?></span></li>
 								<?php elseif($this->active_literas[$key] == 0): ?>

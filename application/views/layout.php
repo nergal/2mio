@@ -16,7 +16,7 @@
 		<script language="JavaScript">var N = 3;var ar_bn1= Math.floor(Math.random()*N+1);</script>
 
 		<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
-		<script type="text/javascript">VK.init({apiId: <?php echo Kohana::config('oauth.vkontakte.key') ?>, onlyWidgets: true});</script>
+		<script type="text/javascript">VK.init({apiId: <?php echo Kohana::$config->load('oauth.vkontakte.key') ?>, onlyWidgets: true});</script>
 
 		<?php echo Asset::render(); ?>
 	</head>
