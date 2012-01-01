@@ -1,6 +1,7 @@
 <?php
 /**
- * @group custom
+ * @group nergal
+ * @group kohana.route
  */
 class RoutingTest extends PHPUnit_Framework_TestCase
 {

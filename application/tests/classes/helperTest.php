@@ -1,6 +1,7 @@
 <?php
 /**
- * @group custom
+ * @group nergal
+ * @group nergal.helper
  */
 class HelperTest extends PHPUnit_Framework_TestCase
 {

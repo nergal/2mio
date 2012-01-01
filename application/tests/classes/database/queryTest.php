@@ -1,6 +1,6 @@
 <?php
 /**
- * @group custom
+ * @group nergal
  */
 class Database_QueryTest extends PHPUnit_Framework_TestCase
 {

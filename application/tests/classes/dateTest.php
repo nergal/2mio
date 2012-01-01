@@ -1,6 +1,7 @@
 <?php
 /**
- * @group custom
+ * @group nergal
+ * @group kohana.date
  */
 class DateTest extends PHPUnit_Framework_TestCase
 {

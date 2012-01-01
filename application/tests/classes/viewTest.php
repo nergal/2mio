@@ -1,6 +1,7 @@
 <?php
 /**
- * @group custom
+ * @group nergal
+ * @group kohana.view
  */
 class ViewTest extends PHPUnit_Framework_TestCase
 {
