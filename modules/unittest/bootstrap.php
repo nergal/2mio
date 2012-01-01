@@ -100,8 +100,14 @@ if ( ! defined('KOHANA_START_MEMORY'))
 	define('KOHANA_START_MEMORY', memory_get_usage());
 }
 
+I18n::lang('en-us');
+setlocale(LC_ALL, 'en_US');
+date_default_timezone_set('Europe/London');
+
+
 // Bootstrap the application
 require APPPATH.'bootstrap'.EXT;
+
 
 // Enable the unittest module
 Kohana::modules(Kohana::modules() + array('unittest' => MODPATH.'unittest'));
