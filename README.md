@@ -1,12 +1,12 @@
 === TODO:
 * Пофиксить тесты для групп
-  * kohana.exception
-  * Kohana.core
+  * kohana.exception (не хватает памяти)
+  * Kohana.core (настройки тестов)
   * kohana.cookie
-  * kohana.date
+  * kohana.date (настройки тестов)
   * kohana.route
   * kohana.session
-  * kohana.validation
+  * kohana.validation (настройки тестов)
 * Покрыть тестами модули и приложение
 * Унифицировать модели
   * Перенести генерацию урла в модель
