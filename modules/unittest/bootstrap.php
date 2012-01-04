@@ -1,5 +1,6 @@
 <?php
 
+
 define('KOHANA_ENV', 'testing');
 
 /**
@@ -23,7 +24,7 @@ $modules = '../../modules';
  *
  * @see  http://kohanaframework.org/guide/about.install#system
  */
-$system = '../../system';
+$system = '../../core';
 
 /**
  * The default extension of resource files. If you change this, all resources
@@ -100,14 +101,12 @@ if ( ! defined('KOHANA_START_MEMORY'))
 	define('KOHANA_START_MEMORY', memory_get_usage());
 }
 
-I18n::lang('en-us');
-setlocale(LC_ALL, 'en_US');
-date_default_timezone_set('Europe/London');
-
-
 // Bootstrap the application
 require APPPATH.'bootstrap'.EXT;
 
+I18n::lang('en-us');
+setlocale(LC_ALL, 'en_US');
+date_default_timezone_set('Europe/London');
 
 // Enable the unittest module
 Kohana::modules(Kohana::modules() + array('unittest' => MODPATH.'unittest'));

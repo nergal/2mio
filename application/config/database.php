@@ -7,8 +7,8 @@ return array
 		'connection' => array(
 			'hostname'   => '127.0.0.1',
 			'database'   => 'db',
-			'username'   => 'xo4y-user',
-			'password'   => 'p@s$W0rD',
+			'username'   => 'nergal',
+			'password'   => 'S3roah2PuQ1',
 			'persistent' => FALSE,
 		),
 		'table_prefix' => '',

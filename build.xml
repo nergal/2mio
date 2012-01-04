@@ -2,7 +2,7 @@
 <project name="2mio" default="help">
 	<tstamp />
 
-	<property file="build.properties" />
+	<property file="build.ini" />
 
 	<target name="help">
 		<echo message="Общие задачи" />

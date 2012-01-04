@@ -1,4 +1,4 @@
-<phpunit colors="true" bootstrap="public/index.php">
+<phpunit colors="true" bootstrap="modules/unittest/bootstrap.php">
 	<testsuites>
 		<testsuite name="Kohana Tests">
 			<file>modules/unittest/tests.php</file>
