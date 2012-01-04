@@ -1,1 +1,0 @@
-../../application/config/resizer.php
