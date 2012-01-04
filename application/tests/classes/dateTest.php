@@ -11,7 +11,7 @@ class DateTest extends PHPUnit_Framework_TestCase
      */
     public function testFuzzy($date, $local_date, $expect)
     {
-	$test = Date::fuzzy_span($date, $local_date);
+	$test = Date::defuzzy_span($date, $local_date);
 	$this->assertEquals($test, $expect);
     }
     

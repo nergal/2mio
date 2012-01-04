@@ -20,7 +20,7 @@ class Date extends Kohana_Date
 	    );
     }
 
-    public static function fuzzy_span($date = 'now', $local_date = 'now')
+    public static function defuzzy_span($date = 'now', $local_date = 'now')
     {
 	$date = new DateTime($date);
 	$current_time = new DateTime($local_date);
@@ -52,13 +52,13 @@ class Date extends Kohana_Date
 	return $fuzzy;
     }
     
-    public static function formatted_date($date_str = 'now', $timestamp_format = NULL, $timezone = NULL)
+    public static function deformatted_date($date_str = 'now', $timestamp_format = NULL, $timezone = NULL)
     {
 		$date = parent::formatted_time($date_str, $timestamp_format, $timezone);
 		return strtr($date, self::_get_monthes());
     }
     
-    public static function formatted_time($datetime_str = 'now', $timestamp_format = NULL, $timezone = NULL)
+    public static function deformatted_time($datetime_str = 'now', $timestamp_format = NULL, $timezone = NULL)
     {
 		$date = parent::formatted_time($datetime_str, $timestamp_format, $timezone);
 		return strtr($date, self::_get_monthes());

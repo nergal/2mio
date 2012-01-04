@@ -98,7 +98,7 @@ class Kohana_Unittest_Helpers {
 	{
 		if ( ! count($environment))
 			return FALSE;
-
+		
 		foreach ($environment as $option => $value)
 		{
 			$backup_needed = ! array_key_exists($option, $this->_environment_backup);

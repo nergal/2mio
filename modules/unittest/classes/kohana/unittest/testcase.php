@@ -50,8 +50,9 @@ abstract class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase {
 		}
 
 		$this->_helpers = new Unittest_Helpers;
-
 		$this->setEnvironment($this->environmentDefault);
+		
+		setlocale(LC_ALL, 'en_US');
 	}
 
 	/**
