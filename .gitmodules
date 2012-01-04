@@ -4,3 +4,6 @@
 [submodule "core"]
 	path = core
 	url = https://github.com/kohana/core.git
+[submodule "modules/plater"]
+	path = modules/plater
+	url = git@github.com:nergal/plater.git
