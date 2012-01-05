@@ -1,6 +1,6 @@
 [submodule "modules/beanstalk"]
 	path = modules/beanstalk
-	url = git@github.com:nergal/kohana-banstalkd.git
+	url = git@github.com:nergal/kohana-beanstalkd.git
 [submodule "core"]
 	path = core
 	url = https://github.com/kohana/core.git
