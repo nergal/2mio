@@ -43,6 +43,7 @@ if (isset($_SERVER['KOHANA_ENV'])) {
 	Kohana::$environment = constant($env);
 }
 
+
 if (Kohana::$environment === Kohana::DEVELOPMENT) {
 	$config = array(
 		'timezone'  => 'Europe/Kiev',
@@ -52,7 +53,7 @@ if (Kohana::$environment === Kohana::DEVELOPMENT) {
 		'profile'   => TRUE,
 		'errors'    => TRUE,
 		'charset'   => 'utf-8',
-		'modules'   => 'apis/twitter, asset, auth, cache, bbcode, beanstalk, blocks, database, demo, event, image, mailer, meta, oauth, orm, orm-mptt, pagination, plater, resizer, unittest, sso, libs',
+		'modules'   => 'apis/twitter, asset, auth, cache, bbcode, beanstalk, blocks, database, demo, event, image, mailer, meta, oauth, orm, orm-mptt, pagination, plater, resizer, unittest, sso, libs, jelly, jelly-auth, service',
 		'cache_dir' => APPPATH.'cache',
 		'logdir'    => APPPATH.'../etc/logs/application',
 		'salt'      => 'nd79Y!cPDG!SuWV$rWT8uHdJk%*T2ve84%#&9GCwN6c^5Hbj54^P$Ckx!8RH',
@@ -70,7 +71,7 @@ if (Kohana::$environment === Kohana::DEVELOPMENT) {
 		'profile'   => FALSE,
 		'errors'    => FALSE,
 		'charset'   => 'utf-8',
-		'modules'   => 'apis/twitter, asset, auth, cache, bbcode, beanstalk, blocks, database, demo, event, image, mailer, meta, oauth, orm, orm-mptt, pagination, plater, resizer, sso, libs',
+		'modules'   => 'apis/twitter, asset, auth, cache, bbcode, beanstalk, blocks, database, demo, event, image, mailer, meta, oauth, orm, orm-mptt, pagination, plater, resizer, sso, libs, service',
 		'cache_dir' => APPPATH.'cache',
 		'logdir'    => FALSE,
 		'salt'      => '22sjmFA%$3uUb3d7AKG82A^unxGkdvMR9!5*47czjRWFFDBz!Bb@Q7Epf5^b',
@@ -84,7 +85,7 @@ if (Kohana::$environment === Kohana::DEVELOPMENT) {
 		'profile'   => FALSE,
 		'errors'    => FALSE,
 		'charset'   => 'utf-8',
-		'modules'   => 'apis/twitter, asset, auth, cache, bbcode, beanstalk, blocks, database, event, image, mailer, meta, oauth, orm, orm-mptt, pagination, plater, resizer, sso, libs',
+		'modules'   => 'apis/twitter, asset, auth, cache, bbcode, beanstalk, blocks, database, event, image, mailer, meta, oauth, orm, orm-mptt, pagination, plater, resizer, sso, libs, service',
 		'cache_dir' => APPPATH.'cache',
 		'logdir'    => APPPATH.'../etc/logs/application',
 		'salt'      => '6wGwxJmevA$r92e5ZNmCK#C4UeET#$J2x%tA4E&R2HV8R5pvv^BtA@sjdT3f',
@@ -134,12 +135,12 @@ Cookie::$salt = $config['salt'];
  */
 Kohana::init(
     array(
-		'base_url' => '/',
-	    'index_file' => '/',
-		'caching'  => $config['caching'],
-		'profile'  => $config['profile'],
-		'errors'   => $config['errors'],
-		'charset'  => $config['charset'],
+        'base_url' => '/',
+        'index_file' => '/',
+        'caching'  => $config['caching'],
+        'profile'  => $config['profile'],
+        'errors'   => $config['errors'],
+        'charset'  => $config['charset'],
     )
 );
 
@@ -159,7 +160,16 @@ if ($config['logdir'] !== FALSE) {
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
-Kohana::$config->attach(new Config_File);
+Kohana::$config->attach(new Config_File('config'));
+$mode = 'production';
+if (Kohana::$environment === Kohana::DEVELOPMENT) {
+    $mode = 'development';
+} elseif (Kohana::$environment === Kohana::TESTING) {
+    $mode = 'testing';
+} elseif (Kohana::$environment === Kohana::STAGING) {
+    $mode = 'staging';
+}
+Kohana::$config->attach(new Config_File('config/'.$mode));
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.

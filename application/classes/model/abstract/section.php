@@ -8,63 +8,63 @@
  */
 abstract class Model_Abstract_Section extends ORM implements Model_Abstract_Interface_Section
 {
-	/**
-	 * Алиас для выборки типа из type_pages
-	 * @var string
-	 */
-	protected $_type_alias = NULL;
+    /**
+     * Алиас для выборки типа из type_pages
+     * @var string
+     */
+    protected $_type_alias = NULL;
 
-	/**
-	 * Имя таблицы
-	 * @var string
-	 */
+    /**
+     * Имя таблицы
+     * @var string
+     */
     protected $_table_name = 'sections';
 
     /**
-	 * Внешние связи "один ко многим"
-	 * @var array
-	 */
+     * Внешние связи "один ко многим"
+     * @var array
+     */
     protected $_has_many = array(
-		'section' => array(
-		    'model' => 'section',
-		    'foreign_key' => 'parent_id',
-		),
-		'page'   => array(
-			'model' => 'page',
-			'foreign_key' => 'section_id',
-		),
-	);
+        'section' => array(
+            'model' => 'section',
+            'foreign_key' => 'parent_id',
+        ),
+        'page'   => array(
+            'model' => 'page',
+            'foreign_key' => 'section_id',
+        ),
+    );
 
-	protected $_belongs_to = array(
-		'type' => array(
-			'model' => 'sectiontype',
-			'foreign_key' => 'type_id',
-		),
-		'parent' => array(
-		    'model' => 'section',
-		    'foreign_key' => 'parent_id',
-		),
+    protected $_belongs_to = array(
+        'type' => array(
+            'model' => 'sectiontype',
+            'foreign_key' => 'type_id',
+        ),
+        'parent' => array(
+            'model' => 'section',
+            'foreign_key' => 'parent_id',
+        ),
     );
 
     protected $_load_with = array('type', 'parent');
 
-	/**
-	 * Создание внутренних запросов модели
-	 * с прикреплённым типом материала
-	 *
-	 * @param integer $type Тип запроса
-	 * @return ORM
-	 */
-	protected function _build($type)
-	{
-		parent::_build($type);
+    /**
+     * Создание внутренних запросов модели
+     * с прикреплённым типом материала
+     *
+     * @param integer $type Тип запроса
+     * @return ORM
+     */
+    protected function _build($type)
+    {
+        parent::_build($type);
 
-		if ($type == Database::SELECT AND $this->_type_alias !== NULL) {
-			$this->_db_builder->where('type.alias', '=', $this->_type_alias);
-		}
+        if ($type == Database::SELECT AND $this->_type_alias !== NULL) {
+            $this->_db_builder->where('type.alias', '=', $this->_type_alias);
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * Выборка секции
@@ -74,9 +74,9 @@ abstract class Model_Abstract_Section extends ORM implements Model_Abstract_Inte
      */
     public function get_section($category)
     {
-    	$self = clone $this;
-    	$query = $self->where($this->_table_name.'.name_url', '=', $category);
-    	return $query->find();
+        $self = clone $this;
+        $query = $self->where($this->_table_name.'.name_url', '=', $category);
+        return $query->find();
     }
 
     /**
@@ -87,9 +87,9 @@ abstract class Model_Abstract_Section extends ORM implements Model_Abstract_Inte
      */
     public function get_section_by_id($id)
     {
-	$self = clone $this;
-    	$query = $self->where($this->_table_name.'.id', '=', $id);
-    	return $query->find();
+    $self = clone $this;
+        $query = $self->where($this->_table_name.'.id', '=', $id);
+        return $query->find();
     }
 
     /**
@@ -100,21 +100,21 @@ abstract class Model_Abstract_Section extends ORM implements Model_Abstract_Inte
      */
     public function get_childs($id)
     {
-    	if ( ! $this->loaded()) {
-    		$id = (is_numeric($id) ? $id : ($this->get_section($id)->id));
-			$this->where($this->_table_name.'.parent_id', '=', $id);
-			$data = $this->find_all();
+        if ( ! $this->loaded()) {
+            $id = (is_numeric($id) ? $id : ($this->get_section($id)->id));
+            $this->where($this->_table_name.'.parent_id', '=', $id);
+            $data = $this->find_all();
 
-			$list = array();
-			foreach ($data as $item) {
-				$list[] = $item->id;
-			}
+            $list = array();
+            foreach ($data as $item) {
+                $list[] = $item->id;
+            }
 
-			$list[] = $id;
-			return (array) $list;
-    	}
+            $list[] = $id;
+            return (array) $list;
+        }
 
-    	return NULL;
+        return NULL;
     }
 
     /**
@@ -130,27 +130,27 @@ abstract class Model_Abstract_Section extends ORM implements Model_Abstract_Inte
                         ->where($this->_table_name.'.showhide', '=', 1)
                         ->order_by($this->_table_name.'.order');
                 if (is_numeric($parent_id)) {
-                	$query->where($this->_table_name.'.parent_id', '=', $parent_id);
+                    $query->where($this->_table_name.'.parent_id', '=', $parent_id);
                 } else {
-                	$query
-                		->join(array('sections', 'sub'))
-                		->on($this->_table_name.'.id', '=', 'sub.parent_id')
-                		->where('sub.name_url', '=', $parent_id);
+                    $query
+                        ->join(array('sections', 'sub'))
+                        ->on($this->_table_name.'.id', '=', 'sub.parent_id')
+                        ->where('sub.name_url', '=', $parent_id);
                 }
 
-				$query->reset(FALSE);
-				$count = $query->count_all();
+                $query->reset(FALSE);
+                $count = $query->count_all();
 
-				if ($page !== NULL) {
-					$offset = $limit * (intVal($page) - 1);
+                if ($page !== NULL) {
+                    $offset = $limit * (intVal($page) - 1);
 
-					$query = $query
-						->limit($limit)
-						->offset($offset);
-				}
+                    $query = $query
+                        ->limit($limit)
+                        ->offset($offset);
+                }
 
 
-				$items = $query->find_all();
+                $items = $query->find_all();
 
                 return array($items, $count);
     }

@@ -7,10 +7,10 @@
  */
 class View extends Plater {
 
-	/**
-	 * Правила для транслитерации
-	 * @var array
-	 */
+    /**
+     * Правила для транслитерации
+     * @var array
+     */
     protected $_translate_rules = array(
         "Ґ"=>"G",  "Ё"=>"YO",  "Є"=>"YE", "Ї"=>"YI",  "І"=>"I",
         "і"=>"i",  "ґ"=>"g",   "ё"=>"yo", "№"=>"",    "є"=>"je",
@@ -41,32 +41,32 @@ class View extends Plater {
      */
     public function link($object, $title = NULL, $attributes = NULL)
     {
-		if ($object instanceof Model_Menu) {
-			if (empty($title)) {
-				$title = $object->title;
-			}
+        if ($object instanceof Model_Menu) {
+            if (empty($title)) {
+                $title = $object->title;
+            }
 
-			if ($object->section->loaded()) {
-				return $this->link($object->section, $title, $attributes);
-			} elseif ($object->page->loaded()) {
-				return $this->link($object->page, $title, $attributes);
-			}
-		}
+            if ($object->section->loaded()) {
+                return $this->link($object->section, $title, $attributes);
+            } elseif ($object->page->loaded()) {
+                return $this->link($object->page, $title, $attributes);
+            }
+        }
 
-		if (empty($title)) {
-			if (isset($object->title)) {
-				$title = $object->title;
-		    } elseif (isset($object->name)) {
-			    $title = $object->name;
-		    } elseif (isset($object->username)) {
-		    	$title = $object->get_user_title();
-		    }
+        if (empty($title)) {
+            if (isset($object->title)) {
+                $title = $object->title;
+            } elseif (isset($object->name)) {
+                $title = $object->name;
+            } elseif (isset($object->username)) {
+                $title = $object->get_user_title();
+            }
 
-		    $title = Helper::escape($title);
-		}
-		return HTML::anchor($this->uri($object), $title, $attributes);
+            $title = Helper::escape($title);
+        }
+        return HTML::anchor($this->uri($object), $title, $attributes);
     }
-    
+
     /**
      * Генерация ссылки для хлебных крошек
      *
@@ -77,19 +77,18 @@ class View extends Plater {
      */
     public function link_bread($object, $title = NULL)
     {
-		if (empty($title)) {
-			if (isset($object->title)) {
-				$title = $object->title;
-		    } elseif (isset($object->name)) {
-			    $title = $object->name;
-		    } elseif (isset($object->username)) {
-		    	$title = $object->get_user_title();
-		    }
-			$title = Helper::escape($title);
-		}
-		return '<span typeof="v:Breadcrumb"><a property="v:title" rel="v:url" href="'.rtrim(URL::base(TRUE), '/').$this->uri($object).'">'.$title.'</a></span>';
+        if (empty($title)) {
+            if (isset($object->title)) {
+                $title = $object->title;
+            } elseif (isset($object->name)) {
+                $title = $object->name;
+            } elseif (isset($object->username)) {
+                $title = $object->get_user_title();
+            }
+            $title = Helper::escape($title);
+        }
+        return '<span typeof="v:Breadcrumb"><a property="v:title" rel="v:url" href="'.rtrim(URL::base(TRUE), '/').$this->uri($object).'">'.$title.'</a></span>';
     }
-     
 
     /**
      * Генерация урла
@@ -100,119 +99,72 @@ class View extends Plater {
      */
     public function uri($object = NULL, Array $params = NULL)
     {
-    	if ($object instanceof Model_User) {
-    		$uri = array();
+        if ($object instanceof Model_User) {
+            $uri = array();
 
-	    	$route = array(
-	    		'name' => 'profile',
-	    		'params' => array(
-	    			'id' => $object->id,
-	    		),
-	    	);
-	    } elseif ($object instanceof Model_Menu) {
-			if ($object->section->loaded()) {
-				return $this->uri($object->section);
-			} elseif ($object->page->loaded()) {
-				return $this->uri($object->page);
-			}
-    	} elseif ($object instanceof Model_Question) {
-		    $uri = array();
+            $route = array(
+                'name' => 'profile',
+                'params' => array(
+                    'id' => $object->id,
+                ),
+            );
+        } elseif ($object instanceof Model_Gallery) {
+            $route = array(
+                'name' => (isset($params['add']) AND $params['add'] === TRUE) ? 'photo-add' : 'gallery-list',
+                'params' => array(
+                    'category' => $object->name_url,
+                    'id' => $object->id,
+                ),
+            );
+        } elseif ($object instanceof Model_Photo) {
+            $route = array(
+                'name' => 'gallery-view',
+                'params' => array(
+                    'category' => $object->section->name_url,
+                    'id' => $object->id,
+                ),
+            );
+        } elseif ($object instanceof Model_Abstract_Page) {
+            $uri = array();
+            $rout_ext = (isset($params) AND ! empty($params['operation'])) ? '-operation' : '-view';
+            $alias = $object->type->alias;
 
-	    	$route = array(
-	    		'name' => 'consult-view',
-	    		'params' => array(
-	    			'category' => $object->speciality->name_url,
-	    			'id' => $object->id,
-	    			'title' => $object->name_url,
-	    		),
-	    	);
-		} elseif ($object instanceof Model_Speciality) {
-		    $uri = array();
+            if ($alias == 'photo') {
+                $alias = 'gallery';
+            }
 
-		    $route = array(
-		    	'name' => 'consult-list',
-		    	'params' => array('category' => $object->name_url),
-		    );
-		} elseif ($object instanceof Model_Gallery) {
-	    	$route = array(
-	    		'name' => (isset($params['add']) AND $params['add'] === TRUE) ? 'photo-add' : 'gallery-list',
-	    		'params' => array(
-	    			'category' => $object->name_url,
-	    			'id' => $object->id,
-	    		),
-	    	);
-		} elseif ($object instanceof Model_Photo) {
-	    	$route = array(
-	    		'name' => 'gallery-view',
-	    		'params' => array(
-	    			'category' => $object->section->name_url,
-	    			'id' => $object->id,
-	    		),
-	    	);
-		} elseif ($object instanceof Model_Videogallery) {
-	    	$route = array(
-	    		'name' => 'video',
-	    		'params' => array(
-	    			'category' => $object->name_url,
-	    			'id' => $object->id,
-	    		),
-	    	);
-		} elseif ($object instanceof Model_Video) {
-	    	$route = array(
-	    		'name' => 'video-view',
-	    		'params' => array(
-	    			'category' => $object->section->name_url,
-	    			'id' => $object->id,
-	    		),
-	    	);
-		} elseif ($object instanceof Model_Tag) {
-			$route = array(
-	    		'name' => 'tags-view',
-	    		'params' => array(
-	    			'tag' => $object->name,
-	    		),
-	    	);
-		} elseif ($object instanceof Model_Abstract_Page) {
-		    $uri = array();
-			$rout_ext = (isset($params) AND ! empty($params['operation'])) ? '-operation' : '-view';
-			$alias = $object->type->alias;
+            if ($object->type->loaded()) {
+                $route = array(
+                    'name' => $object->type->alias.$rout_ext,
+                    'params' => array(
+                        'category' => $object->section->name_url,
+                        'id' => $object->id,
+                        'title' => $this->transliterate($object->title),
+                        'operation' => (isset($params) AND ! empty($params['operation'])) ? $params['operation'] : 'view',
+                    ),
+                );
+            } else {
+                Kohana::$log->add(Log::ERROR, 'Невозможно узнать тип статьи page_id='.$object->id);
+            }
+        } elseif ($object instanceof Model_Abstract_Section) {
+            $uri = array();
+            $rout_ext = (isset($params) AND ! empty($params['operation'])) ? '-operation' : '';
 
-			if ($alias == 'photo') {
-				$alias = 'gallery';
-			}
+            if ($object->type->loaded()) {
+                $route = array(
+                    'name' => $object->type->alias.$rout_ext,
+                    'params' => array(
+                        'category' => $object->name_url,
+                        'operation' => (isset($params) AND ! empty($params['operation'])) ? $params['operation'] : 'view'
+                    ),
+                );
+            } else {
+                Kohana::$log->add(Log::ERROR, 'Невозможно узнать тип секции page_id='.$object->id);
+            }
+        }
 
-			if ($object->type->loaded()) {
-			    $route = array(
-					'name' => $object->type->alias.$rout_ext,
-		    		'params' => array(
-		    			'category' => $object->section->name_url,
-		    			'id' => $object->id,
-		    			'title' => $this->transliterate($object->title),
-		    			'operation' => (isset($params) AND ! empty($params['operation'])) ? $params['operation'] : 'view',
-		    		),
-		    	);
-			} else {
-				Kohana::$log->add(Log::ERROR, 'Невозможно узнать тип статьи page_id='.$object->id);
-			}
-		} elseif ($object instanceof Model_Abstract_Section) {
-		    $uri = array();
-		    $rout_ext = (isset($params) AND ! empty($params['operation'])) ? '-operation' : '';
-
-		    if ($object->type->loaded()) {
-			    $route = array(
-					'name' => $object->type->alias.$rout_ext,
-			    	'params' => array(
-						'category' => $object->name_url,
-						'operation' => (isset($params) AND ! empty($params['operation'])) ? $params['operation'] : 'view'
-			    	),
-			    );
-			} else {
-				Kohana::$log->add(Log::ERROR, 'Невозможно узнать тип секции page_id='.$object->id);
-		    }
-		}
-
-		$uri = isset($route) ? URL::site(Route::get($route['name'])->uri($route['params'])) : '/';
-		return $uri;
+        $uri = isset($route) ? URL::site(Route::get($route['name'])->uri($route['params'])) : '/';
+        return $uri;
     }
 
     /**
@@ -243,14 +195,14 @@ class View extends Plater {
 
     public function render_tags(Model_Abstract_Page $page)
     {
-    	$tags = $page->tags->find_all();
+        $tags = $page->tags->find_all();
 
-    	$links = array();
-    	foreach ($tags as $tag) {
-    		$links[] = $this->link($tag);
-    	}
+        $links = array();
+        foreach ($tags as $tag) {
+            $links[] = $this->link($tag);
+        }
 
-    	return implode(', ', $links);
+        return implode(', ', $links);
     }
 
     /**
@@ -271,118 +223,94 @@ class View extends Plater {
 
     public function photo(ORM $object, $size = NULL, $type = 'cropr')
     {
-		if ($object->loaded()) {
-			if ($object instanceof Model_Photo OR ($object instanceof Model_Abstract_Page AND $object->get_alias() == 'photo')) {
-				$url = array('/'.(($size === NULL) ? 'uploads' : 'thumbnails'));
+        if ($object->loaded()) {
+            if ($object instanceof Model_Photo OR ($object instanceof Model_Abstract_Page AND $object->get_alias() == 'photo')) {
+                $url = array('/'.(($size === NULL) ? 'uploads' : 'thumbnails'));
 
-				if (preg_match('#^([a-f0-9]{32,})\.(gif|jpe?g|png)$#ui', $object->photo)) {
-					$url[]= substr($object->photo, 0, 2);
-					$url[]= substr($object->photo, 2, 4);
+                if (preg_match('#^([a-f0-9]{32,})\.(gif|jpe?g|png)$#ui', $object->photo)) {
+                    $url[]= substr($object->photo, 0, 2);
+                    $url[]= substr($object->photo, 2, 4);
 
-					$filename = $object->photo;
-				} else {
-					$url = array('/'.(($size === NULL) ? 'images' : 'thumbnails').'/articles');
-					$photo = explode('/', $object->photo);
-					$photo = array_filter($photo);
+                    $filename = $object->photo;
+                } else {
+                    $url = array('/'.(($size === NULL) ? 'images' : 'thumbnails').'/articles');
+                    $photo = explode('/', $object->photo);
+                    $photo = array_filter($photo);
 
-					$filename = array_splice($photo, -1, 1);
-					$filename = end($filename);
-					$url = array_merge($url, $photo);
-				}
+                    $filename = array_splice($photo, -1, 1);
+                    $filename = end($filename);
+                    $url = array_merge($url, $photo);
+                }
 
-				if ($size !== NULL) {
-					$url[]= "{$type}_{$size}";
-				}
+                if ($size !== NULL) {
+                    $url[]= "{$type}_{$size}";
+                }
 
-				$url[]= $filename;
+                $url[]= $filename;
 
-				$url = array_filter($url);
-				return implode('/', $url);
-			} elseif ($object instanceof Model_Video OR ($object instanceof Model_Abstract_Page AND $object->get_alias() == 'video')) {
-				$url = '/thumbnails/';
-				$url.= substr($object->photo, 0, 2).'/';
-				$url.= substr($object->photo, 2, 4).'/';
+                $url = array_filter($url);
+                return implode('/', $url);
+            } elseif ($object instanceof Model_Media) {
+                $url = array('/'.(($size === NULL) ? 'images' : 'thumbnails').'/articles');
+                $photo = explode('/', basename($object->name));
+                $photo = array_filter($photo);
 
-				if ($size !== NULL) {
-					$url.= "{$type}_{$size}/";
-				}
+                $filename = array_splice($photo, -1, 1);
+                $filename = end($filename);
+                $url = array_merge($url, $photo);
+                if ($size !== NULL) {
+                    $url[]= "{$type}_{$size}";
+                }
 
-				$url.= str_replace('.flv', '.png', $object->photo);
+                $url[]= $filename;
 
-				return $url;
-			} elseif ($object instanceof Model_Media) {
-				$url = array('/'.(($size === NULL) ? 'images' : 'thumbnails').'/articles');
-				$photo = explode('/', basename($object->name));
-				$photo = array_filter($photo);
+                $url = array_filter($url);
+                return implode('/', $url);
+            } elseif ($object->photo) {
+                $url = array('/'.(($size === NULL) ? 'images' : 'thumbnails').'/articles');
 
-				$filename = array_splice($photo, -1, 1);
-				$filename = end($filename);
-				$url = array_merge($url, $photo);
-				if ($size !== NULL) {
-					$url[]= "{$type}_{$size}";
-				}
+                $photo = explode('/', $object->photo);
+                $photo = array_filter($photo);
 
-				$url[]= $filename;
+                $filename = array_splice($photo, -1, 1);
+                $url = array_merge($url, $photo);
 
-				$url = array_filter($url);
-				return implode('/', $url);
-			} elseif ($object->photo) {
-				$url = array('/'.(($size === NULL) ? 'images' : 'thumbnails').'/articles');
+                if ($size !== NULL) {
+                    $url[] = $type.'_'.$size;
+                }
+                $url[] = end($filename);
+                return implode('/', $url);
+            }
+        }
 
-				$photo = explode('/', $object->photo);
-				$photo = array_filter($photo);
-
-				$filename = array_splice($photo, -1, 1);
-				$url = array_merge($url, $photo);
-
-				if ($size !== NULL) {
-					$url[] = $type.'_'.$size;
-				}
-				$url[] = end($filename);
-				return implode('/', $url);
-			}
-		}
-
-		return '/i/placeholder.gif';
-    }
-
-	public function video(ORM $object)
-	{
-		if ($object->loaded()) {
-			if ($object instanceof Model_Video) {
-				$url = '/uploads/';
-				$url.= substr($object->photo, 0, 2).'/';
-				$url.= substr($object->photo, 2, 4).'/';
-
-				$url.= $object->photo;
-
-				return URL::site($url, 'http');
-			}
-		}
-
-		return NULL;
+        return '/i/placeholder.gif';
     }
 
     public function banner($place)
     {
-    	$place = ORM::factory('place')
-    		->where('name', '=', $place)
-    		->find();
-    	$banners = $place->banners
-    		->where('MD5("code")', '=', DB::expr('`hash`'))
-    		->where('showhide', '=', 1)
-    		->find_all();
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
+            $html = '<img src="//placehold.it/300x250" />';
+            $html = array($html);
+        } else {
+            $place = ORM::factory('place')
+                ->where('name', '=', $place)
+                ->find();
+            $banners = $place->banners
+                ->where('MD5("code")', '=', DB::expr('`hash`'))
+                ->where('showhide', '=', 1)
+                ->find_all();
 
-    	$html = array();
-    	foreach ($banners as $banner) {
-    		$html[] = $banner->code;
-    	}
+            $html = array();
+            foreach ($banners as $banner) {
+                $html[] = $banner->code;
+            }
+        }
 
-		return implode('<br />', $html);
+        return implode('<br />', $html);
     }
 
     public function plural($count, $form1, $form2, $form3)
     {
-	return Helper::plural($count, $form1, $form2, $form3);
+        return Helper::plural($count, $form1, $form2, $form3);
     }
 }

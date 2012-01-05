@@ -1,25 +1,5 @@
 <?php $url = $this->uri($this->page); ?>
 <script type="text/javascript">$(function() {$('#hello_bots').val('<?php echo $this->hello_bots; ?>');});</script>		
-<!-- begin comments for <?php echo $url; ?> -->
-<?php if (Auth::instance()->logged_in('admin')): ?>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$(".editable_textarea").editable("<?php echo $url; ?>", {
-		    type       : 'textarea',
-			submitdata : function(value, settings) {
-				var id = $(this).parents('li[id]').attr('id');
-				return {action: 'edit', id: id};
-			},
-		    submit     : 'Сохранить',
-			cancel     : 'Отмена',
-			cssclass   : 'editable',
-			width      : '99%',
-			height     : 'auto'
-		});
-	});
-	</script>
-<?php endif; ?>
-
 <div id="comments">
         <div class="middle_line">
 		<a href="#comments-form" id="add-comment2"><img src="/i/add_comment.png" alt="Комментировать" /></a>
