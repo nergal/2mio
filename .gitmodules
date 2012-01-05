@@ -28,3 +28,21 @@
 [submodule "modules/orm"]
 	path = modules/orm
 	url = git@github.com:nergal/orm.git
+[submodule "modules/event"]
+	path = modules/event
+	url = git@github.com:nergal/kohana-event.git
+[submodule "modules/asset"]
+	path = modules/asset
+	url = git@github.com:nergal/kohana-asset.git
+[submodule "modules/bbcode"]
+	path = modules/bbcode
+	url = git@github.com:nergal/kohana-bbcode.git
+[submodule "modules/resizer"]
+	path = modules/resizer
+	url = git@github.com:nergal/kohana-resizer.git
+[submodule "modules/apis"]
+	path = modules/apis
+	url = git@github.com:nergal/apis.git
+[submodule "modules/demo"]
+	path = modules/demo
+	url = git@github.com:nergal/demo.git
