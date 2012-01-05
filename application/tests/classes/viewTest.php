@@ -11,7 +11,7 @@ class ViewTest extends PHPUnit_Framework_TestCase
      */
     public function testPhoto($model, $path, $size, $type, $is_loaded, $expect)
     {
-	$model = $this->getMock($model, array('loaded', '__get'), array(), '', FALSE);
+	$model = $this->getMock($model, array('loaded', 'photo'), array(), '', FALSE);
 	
 	$model
 	    ->expects($this->once())
@@ -21,8 +21,7 @@ class ViewTest extends PHPUnit_Framework_TestCase
 	if ($is_loaded) {
 	    $model
 		->expects($this->any())
-		->method('__get')
-		->with($this->equalTo('photo'))
+		->property('photo')
 		->will($this->returnValue($path));
 	}
 	

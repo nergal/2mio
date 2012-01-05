@@ -55,3 +55,18 @@
 [submodule "modules/libs"]
 	path = modules/libs
 	url = git@github.com:nergal/kohana-libs.git
+[submodule "modules/jelly"]
+	path = modules/jelly
+	url = git@github.com:nergal/kohana-jelly.git
+[submodule "modules/jelly-auth"]
+	path = modules/jelly-auth
+	url = git@github.com:nergal/jelly-auth.git
+[submodule "modules/jelly-filtered"]
+	path = modules/jelly-filtered
+	url = git@github.com:nergal/jelly-filtered.git
+[submodule "modules/jelly-form"]
+	path = modules/jelly-form
+	url = git@github.com:nergal/jellyform.git
+[submodule "modules/jelly-mptt"]
+	path = modules/jelly-mptt
+	url = git@github.com:nergal/jelly-mptt.git
