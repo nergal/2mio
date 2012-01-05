@@ -7,3 +7,24 @@
 [submodule "modules/plater"]
 	path = modules/plater
 	url = git@github.com:nergal/plater.git
+[submodule "modules/auth"]
+	path = modules/auth
+	url = git@github.com:nergal/auth.git
+[submodule "modules/cache"]
+	path = modules/cache
+	url = git@github.com:nergal/cache.git
+[submodule "modules/image"]
+	path = modules/image
+	url = git@github.com:nergal/image.git
+[submodule "modules/database"]
+	path = modules/database
+	url = git@github.com:nergal/database.git
+[submodule "modules/oauth"]
+	path = modules/oauth
+	url = git@github.com:nergal/oauth.git
+[submodule "modules/pagination"]
+	path = modules/pagination
+	url = git@github.com:nergal/pagination.git
+[submodule "modules/orm"]
+	path = modules/orm
+	url = git@github.com:nergal/orm.git
