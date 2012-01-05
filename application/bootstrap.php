@@ -59,7 +59,7 @@ if (Kohana::$environment === Kohana::DEVELOPMENT) {
 	);
 
 	if (PHP_SAPI != 'cli') {
-		 $config['modules'].= ', debug-toolbar';
+		 $config['modules'].= ', devbar';
 	}
 } elseif (Kohana::$environment === Kohana::TESTING) {
 	$config = array(

@@ -49,3 +49,6 @@
 [submodule "modules/orm-mptt"]
 	path = modules/orm-mptt
 	url = git@github.com:nergal/kohana3-orm_mptt.git
+[submodule "modules/devbar"]
+	path = modules/devbar
+	url = git@github.com:nergal/developerbar.git
