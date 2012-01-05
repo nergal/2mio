@@ -52,3 +52,6 @@
 [submodule "modules/devbar"]
 	path = modules/devbar
 	url = git@github.com:nergal/developerbar.git
+[submodule "modules/libs"]
+	path = modules/libs
+	url = git@github.com:nergal/kohana-libs.git
