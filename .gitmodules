@@ -70,3 +70,12 @@
 [submodule "modules/jelly-mptt"]
 	path = modules/jelly-mptt
 	url = git@github.com:2mio/jelly-mptt.git
+[submodule "modules/unittest"]
+	path = modules/unittest
+	url = git@github.com:2mio/unittest.git
+[submodule "modules/mailer"]
+	path = modules/mailer
+	url = git@github.com:2mio/Mailer.git
+[submodule "modules/sso"]
+	path = modules/sso
+	url = git@github.com:2mio/sso.git
