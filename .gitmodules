@@ -1,72 +1,72 @@
 [submodule "modules/beanstalk"]
 	path = modules/beanstalk
-	url = git@github.com:nergal/kohana-beanstalkd.git
+	url = git@github.com:2mio/kohana-beanstalkd.git
 [submodule "core"]
 	path = core
-	url = https://github.com/kohana/core.git
+	url = git@github.com:2mio/core.git
 [submodule "modules/plater"]
 	path = modules/plater
-	url = git@github.com:nergal/plater.git
+	url = git@github.com:2mio/plater.git
 [submodule "modules/auth"]
 	path = modules/auth
-	url = git@github.com:nergal/auth.git
+	url = git@github.com:2mio/auth.git
 [submodule "modules/cache"]
 	path = modules/cache
-	url = git@github.com:nergal/cache.git
+	url = git@github.com:2mio/cache.git
 [submodule "modules/image"]
 	path = modules/image
-	url = git@github.com:nergal/image.git
+	url = git@github.com:2mio/image.git
 [submodule "modules/database"]
 	path = modules/database
-	url = git@github.com:nergal/database.git
+	url = git@github.com:2mio/database.git
 [submodule "modules/oauth"]
 	path = modules/oauth
-	url = git@github.com:nergal/oauth.git
+	url = git@github.com:2mio/oauth.git
 [submodule "modules/pagination"]
 	path = modules/pagination
-	url = git@github.com:nergal/pagination.git
+	url = git@github.com:2mio/pagination.git
 [submodule "modules/orm"]
 	path = modules/orm
-	url = git@github.com:nergal/orm.git
+	url = git@github.com:2mio/orm.git
 [submodule "modules/event"]
 	path = modules/event
-	url = git@github.com:nergal/kohana-event.git
+	url = git@github.com:2mio/kohana-event.git
 [submodule "modules/asset"]
 	path = modules/asset
-	url = git@github.com:nergal/kohana-asset.git
+	url = git@github.com:2mio/kohana-asset.git
 [submodule "modules/bbcode"]
 	path = modules/bbcode
-	url = git@github.com:nergal/kohana-bbcode.git
+	url = git@github.com:2mio/kohana-bbcode.git
 [submodule "modules/resizer"]
 	path = modules/resizer
-	url = git@github.com:nergal/kohana-resizer.git
+	url = git@github.com:2mio/kohana-resizer.git
 [submodule "modules/apis"]
 	path = modules/apis
-	url = git@github.com:nergal/apis.git
+	url = git@github.com:2mio/apis.git
 [submodule "modules/demo"]
 	path = modules/demo
-	url = git@github.com:nergal/demo.git
+	url = git@github.com:2mio/demo.git
 [submodule "modules/orm-mptt"]
 	path = modules/orm-mptt
-	url = git@github.com:nergal/kohana3-orm_mptt.git
+	url = git@github.com:2mio/kohana3-orm_mptt.git
 [submodule "modules/devbar"]
 	path = modules/devbar
-	url = git@github.com:nergal/developerbar.git
+	url = git@github.com:2mio/developerbar.git
 [submodule "modules/libs"]
 	path = modules/libs
-	url = git@github.com:nergal/kohana-libs.git
+	url = git@github.com:2mio/kohana-libs.git
 [submodule "modules/jelly"]
 	path = modules/jelly
-	url = git@github.com:nergal/kohana-jelly.git
+	url = git@github.com:2mio/kohana-jelly.git
 [submodule "modules/jelly-auth"]
 	path = modules/jelly-auth
-	url = git@github.com:nergal/jelly-auth.git
+	url = git@github.com:2mio/jelly-auth.git
 [submodule "modules/jelly-filtered"]
 	path = modules/jelly-filtered
-	url = git@github.com:nergal/jelly-filtered.git
+	url = git@github.com:2mio/jelly-filtered.git
 [submodule "modules/jelly-form"]
 	path = modules/jelly-form
-	url = git@github.com:nergal/jellyform.git
+	url = git@github.com:2mio/jellyform.git
 [submodule "modules/jelly-mptt"]
 	path = modules/jelly-mptt
-	url = git@github.com:nergal/jelly-mptt.git
+	url = git@github.com:2mio/jelly-mptt.git
