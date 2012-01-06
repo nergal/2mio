@@ -32,12 +32,12 @@ abstract class Controller_Abstract extends Controller
     {
         parent::before();
 
-        $this->auth = Auth::instance();
-        $this->auth->auto_login();
+//        $this->auth = Auth::instance();
+//        $this->auth->auto_login();
 
-        $this->user = $this->auth->get_user();
+//        $this->user = $this->auth->get_user();
 
-        $this->cache = Cache::instance('memcache');
+//        $this->cache = Cache::instance('memcache');
 
         if ($this->request->is_initial()) {
             self::add_static();
