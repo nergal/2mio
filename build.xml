@@ -148,8 +148,8 @@
 			todir="${build.deploy}"
 			overwrite="true">
 			<fileset dir="src">
-					<exclude name="etc/" />
-					<exclude name="bin/" />
+				<exclude name="etc/" />
+				<exclude name="bin/" />
 			</fileset>
 		</copy>
 	</target>
@@ -237,11 +237,11 @@
 
 <!-- Тесты -->
 	<target name="test">
-		<exec command="phpunit --bootstrap=modules/unittest/bootstrap.php modules/unittest/tests.php" checkreturn="true" passthru="true"/>
+		<exec command="phpunit --process-isolation --bootstrap=modules/unittest/bootstrap.php modules/unittest/tests.php" checkreturn="false" passthru="true"/>
 	</target>
 		    
 	<target name="test-log">
-		<exec command="phpunit --bootstrap=modules/unittest/bootstrap.php --coverage-html=${build.out}/coverage --log-junit=${build.out}/logs/junit.xml --coverage-clover=${build.out}/logs/clover.xml modules/unittest/tests.php" checkreturn="true" passthru="true"/>
+		<exec command="phpunit --process-isolation --bootstrap=modules/unittest/bootstrap.php --coverage-html=${build.out}/coverage --log-junit=${build.out}/logs/junit.xml --coverage-clover=${build.out}/logs/clover.xml modules/unittest/tests.php" checkreturn="false" passthru="true"/>
 	</target>
 
 	<target name="build-selenium">
