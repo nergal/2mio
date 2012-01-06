@@ -19,10 +19,10 @@ class ViewTest extends PHPUnit_Framework_TestCase
 	    ->will($this->returnValue($is_loaded));
 	
 	if ($is_loaded) {
-	    $model
-		->expects($this->any())
-		->property('photo')
-		->will($this->returnValue($path));
+#	    $model
+#		->expects($this->any())
+#		->property('photo')
+#		->will($this->returnValue($path));
 	}
 	
 	$test = View::factory()->photo($model, $size, $type);

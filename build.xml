@@ -268,7 +268,7 @@
 
 <!-- Документация -->
 	<target name="docs">
-		<docblox title="API Documentation" destdir="${build.out}/docs">
+		<docblox title="API Documentation" destdir="${build.out}/api">
 			<fileset refid="project" />
 		</docblox>
 	</target>

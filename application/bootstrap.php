@@ -71,7 +71,7 @@ if (Kohana::$environment === Kohana::DEVELOPMENT) {
 		'profile'   => FALSE,
 		'errors'    => FALSE,
 		'charset'   => 'utf-8',
-		'modules'   => 'apis/twitter, asset, auth, cache, beanstalk, database, demo, event, image, mailer, oauth, orm, orm-mptt, pagination, plater, resizer, sso, libs',
+		'modules'   => 'apis/twitter, asset, auth, cache, beanstalk, database, demo, event, image, mailer, oauth, orm, orm-mptt, pagination, plater, resizer, sso, libs, jelly, jelly-auth',
 		'cache_dir' => APPPATH.'cache',
 		'logdir'    => FALSE,
 		'salt'      => '22sjmFA%$3uUb3d7AKG82A^unxGkdvMR9!5*47czjRWFFDBz!Bb@Q7Epf5^b',
