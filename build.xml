@@ -230,8 +230,8 @@
 	</target>    
 	
 	<target name="phploc" description="Generate phploc.csv">
-	        <mkdir dir="${build.out}/logs" />
-        	<exec command="phploc --log-csv ${build.out}/logs/phploc.csv ${build.dir}" />
+		<mkdir dir="${build.out}/logs" />
+		<exec command="phploc --log-csv ${build.out}/logs/phploc.csv ${build.dir}" />
         </target>
 <!-- /Проверки -->
 
@@ -268,6 +268,7 @@
 
 <!-- Документация -->
 	<target name="docs">
+		<mkdir dir="${build.out}/api" />
 		<docblox title="API Documentation" destdir="${build.out}/api">
 			<fileset refid="project" />
 		</docblox>
