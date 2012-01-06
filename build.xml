@@ -52,13 +52,8 @@
 		<exclude name="application/cache/**" />
 		
 		<include name="application/**/*.php" />
-		<include name="modules/asset/**/*.php" />
-		<include name="modules/bbcode/**/*.php" />
-		<include name="modules/blocks/**/*.php" />
-		<include name="modules/event/**/*.php" />
-		<include name="modules/meta/**/*.php" />
-		<include name="modules/resizer/**/*.php" />
-		<include name="modules/beanstalk/classes/kohana/**/*.php" />
+		<include name="modules/**/**/*.php" />
+		<include name="core/**/**/*.php" />
 		<include name="public/*.php" />
 	</fileset>
 
@@ -273,15 +268,9 @@
 
 <!-- Документация -->
 	<target name="docs">
-		<phpdoc title="API Documentation"
-			destdir="${build.out}/api"
-			sourcecode="false"
-			output="HTML:Smarty:PHP">
+		<docblox title="API Documentation" destdir="${build.out}/docs">
 			<fileset refid="project" />
-			<projdocfileset dir=".">
-				<include name="version.txt" />
-			</projdocfileset>
-		</phpdoc>
+		</docblox>
 	</target>
 <!-- /Документация -->
 	
@@ -289,8 +278,8 @@
 	<target name="ci" depends="clean,prepare-ci">
 		<phingcall target="check-log" />
 		<phingcall target="test-log" />
-		<!-- <phingcall target="docs" /> -->
-		<!-- <phingcall target="phploc" /> -->
+		<phingcall target="docs" />
+		<phingcall target="phploc" />
 	</target>
 <!-- /Hudson CI target -->
 </project>
